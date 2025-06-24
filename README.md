@@ -122,3 +122,43 @@ python whisper_ocr.py path/to/audio.mp3 output/ocr_output/audio_transcription.tx
 python llm_process.py output/ocr_output/raw_file.txt output/llm_output/structured.json
 
 This uses the OCR output as input and writes JSON-structured data to llm_output.
+
+✏️ Customizing the LLM Prompt
+
+The prompt used for extracting data is hardcoded in llm_process.py. You can easily edit it to extract different fields or change the response format.
+🔍 How to Edit
+
+Open llm_process.py and locate this block (around the middle of the script):
+
+prompt = f"""
+Extract the following fields from the text:
+- Invoice Number
+- Date
+- Total Amount
+
+Text:
+{input_text}
+
+Format the response in JSON only, no extra text.
+Example: 
+{{ "invoice_number": "INV-1234", "date": "2025-06-11", "total_amount": "549.98" }}
+"""
+
+🛠️ Customize It
+
+Change the list of fields or output format to suit your document type.
+For example, to extract Client Name and Due Date, modify it like this:
+
+prompt = f"""
+Extract the following fields from the text:
+- Client Name
+- Due Date
+
+Text:
+{input_text}
+
+Format the response in JSON only.
+Example: 
+{{ "client_name": "Acme Corp", "due_date": "2025-07-01" }}
+"""
+
